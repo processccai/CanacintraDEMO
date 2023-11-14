@@ -15,10 +15,11 @@ import os
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+"""
 DATABASES = {
     'default': dj_database_url.parse(os.environ['DATABASE_URL'])
 }
-
+"""
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -31,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # settings.py
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -42,12 +43,13 @@ DATABASES = {
         'PORT': '5432',        # Puerto por defecto de PostgreSQL
     }
 }
-"""
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'api',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
