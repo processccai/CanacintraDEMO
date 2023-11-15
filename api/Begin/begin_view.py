@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login
-
+from django.contrib.auth import logout
 # Create your views here.
 
 class Login(APIView):
@@ -30,6 +30,13 @@ class Login(APIView):
         # form.add_error(None, error_message)  # Esto no es necesario si no estás utilizando el formulario
 
         return render(request, self.template_name, {'error_message': error_message})
+
+class Logout(APIView):
+    def get(self, request):
+        # Realiza el logout
+        logout(request)
+        # Redirige a la página de inicio o a donde desees después del logout
+        return redirect('login')  # Ajusta 'home' según la URL a la que deseas redirigir
 
 class Register(APIView):
     template_name='authentication-register.html'
