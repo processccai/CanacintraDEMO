@@ -23,7 +23,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('',Home.as_view(),name='home'),
     path('login/',Login.as_view(),name='login'),
-    path('register',Register.as_view(),name='login'),
+    path('register',Register.as_view(),name='register'),
 
 
 ]
