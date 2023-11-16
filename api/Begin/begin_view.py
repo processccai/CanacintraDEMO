@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 # Create your views here.
 
 class Login(APIView):
@@ -39,6 +41,40 @@ class Logout(APIView):
         return redirect('login')  # Ajusta 'home' según la URL a la que deseas redirigir
 
 class Register(APIView):
-    template_name='authentication-register.html'
-    def get(self,request):
-        return render(request,self.template_name)
+    template_name = 'authentication-register.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if password1 == password2:
+            # Verificar si el usuario ya existe
+            if not User.objects.filter(username=username).exists():
+                # Crear el usuario
+                user = User.objects.create_user(username=username, email=email, password=password1)
+
+                # Envío de correo electrónico al usuario registrado
+                send_mail(
+                    'Registro Exitoso',
+                    f'Gracias por registrarte en nuestro sitio.\n\nTu nombre de usuario es: {username}\nTu correo electrónico es: {email}',
+                    'processautomedccai@gmail.com',
+                    [email],
+                    fail_silently=False,
+                )
+
+                # Autenticar al usuario
+                user = authenticate(request, username=username, password=password1)
+                login(request, user)
+
+                return redirect('login')  # Redirigir a la página de inicio de sesión
+            else:
+                # El usuario ya existe
+                return render(request, self.template_name, {'error': 'El usuario ya existe.'})
+        else:
+            # Las contraseñas no coinciden
+            return render(request, self.template_name, {'error': 'Las contraseñas no coinciden.'})

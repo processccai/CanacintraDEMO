@@ -25,20 +25,26 @@
                   <img src="{% static 'images/logos/dark-logo.svg' %}" width="180" alt="">
                 </a>
                 <p class="text-center">Your Social Campaigns</p>
-                <form class="mb-3" method="post" >
+                <form class="mb-3" method="post" action="{% url 'register' %}">
+                  {% csrf_token %}
                   <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                    <label for="exampleInputtext1" class="form-label">UserName</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputtext1" aria-describedby="textHelp" required>
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                   </div>
                   <div class="mb-4">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <input type="password" name="password1" class="form-control" id="exampleInputPassword1" required>
                   </div>
-                  <input type="submit" value="Sign Up" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2 "><div class="d-flex align-items-center justify-content-center">
+                  <div class="mb-4">
+                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" id="exampleInputPassword1" required>
+                  </div>
+                  <input type="submit" value="Sign Up" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2 ">
+                  <div class="d-flex align-items-center justify-content-center">
                     <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
                     <a class="text-primary fw-bold ms-2" href="{% url 'login' %}">Sign In</a>
                   </div>
