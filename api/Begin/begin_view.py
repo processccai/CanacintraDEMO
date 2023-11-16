@@ -71,10 +71,15 @@ class Register(APIView):
                 user = authenticate(request, username=username, password=password1)
                 login(request, user)
 
-                return redirect('login')  # Redirigir a la página de inicio de sesión
+                return redirect('success_register')  # Redirigir a la página de inicio de sesión
             else:
                 # El usuario ya existe
                 return render(request, self.template_name, {'error': 'El usuario ya existe.'})
         else:
             # Las contraseñas no coinciden
             return render(request, self.template_name, {'error': 'Las contraseñas no coinciden.'})
+
+class Success_register(APIView):
+    template_name='success_register.html'
+    def get(self,request):
+        return render(request,self.template_name)
