@@ -53,30 +53,33 @@ class Register(APIView):
         password2 = request.POST.get('password2')
 
         if password1 == password2:
-            # Verificar si el usuario ya existe
             if not User.objects.filter(username=username).exists():
-                # Crear el usuario
                 user = User.objects.create_user(username=username, email=email, password=password1)
 
-                # Envío de correo electrónico al usuario registrado
+                # Leer el contenido del archivo HTML
+                with open('api/templates/send_mail.html', 'r') as file:
+                    html_content = file.read()
+
+                # Reemplazar las variables en el archivo HTML con datos del usuario
+                html_content = html_content.format(username=username, password=password1)
+
+                # Envío de correo electrónico al usuario registrado con formato HTML
                 send_mail(
-                    'Registro Exitoso',
-                    f'Gracias por registrarte en nuestro sitio.\n\nTu nombre de usuario es: {username}\nTu correo electrónico es: {email}',
+                    'Not reply, successfuly register',
+                    '',  # Deja el cuerpo del mensaje en blanco, ya que lo proporcionamos en HTML
                     'processautomedccai@gmail.com',
                     [email],
+                    html_message=html_content,  # Especifica el mensaje HTML
                     fail_silently=False,
                 )
 
-                # Autenticar al usuario
                 user = authenticate(request, username=username, password=password1)
                 login(request, user)
 
-                return redirect('success_register')  # Redirigir a la página de inicio de sesión
+                return redirect('success_register')
             else:
-                # El usuario ya existe
                 return render(request, self.template_name, {'error': 'El usuario ya existe.'})
         else:
-            # Las contraseñas no coinciden
             return render(request, self.template_name, {'error': 'Las contraseñas no coinciden.'})
 
 class Success_register(APIView):
