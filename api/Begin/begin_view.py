@@ -86,3 +86,4 @@ class Success_register(APIView):
     template_name='success_register.html'
     def get(self,request):
         return render(request,self.template_name)
+    

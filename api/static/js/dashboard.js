@@ -110,7 +110,7 @@ $(function () {
   // =====================================
   var breakup = {
     color: "#adb5bd",
-    series: [38, 40, 25],
+    series: [170, 30],
     labels: ["2022", "2021", "2020"],
     chart: {
       width: 180,
