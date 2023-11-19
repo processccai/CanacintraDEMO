@@ -20167,3 +20167,43 @@ ul {
 .timeline-widget .timeline-item .timeline-badge.badge-primary {
     border: 2px solid #5D87FF
 }
+
+    
+
+#myModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+ 
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.small-form-container {
+width: 70%; /* Puedes ajustar este valor según tus necesidades */
+margin: 0 auto; /* Para centrar el contenedor */
+}

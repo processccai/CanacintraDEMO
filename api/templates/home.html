@@ -8,48 +8,7 @@
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
   <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
-  <style>
-    
-
-    #myModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-     
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 70%;
-      
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .small-form-container {
-    width: 70%; /* Puedes ajustar este valor según tus necesidades */
-    margin: 0 auto; /* Para centrar el contenedor */
-}
-  </style>
-
+  
 
 </head>
 
@@ -440,30 +399,36 @@
           </a>
           
                
-          <form>
-            <div class="row">
-              
+         
+            <form>
+              <div class="row">
                 <div class="col-sm-6">
-                  <label for="exampleInputEmail1" class="col-form-label">Age
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </label>
+                  <div class="form-group">
+                    <label for="ageInput1">Age 1</label>
+                    <input type="text" class="form-control" id="ageInput1" aria-describedby="ageHelp1">
+                    <small id="ageHelp1" class="form-text text-muted">Enter age 1.</small>
                   </div>
-                
-            </div>
-            <div class="mb-3 row">
-                <label for="exampleInputPassword1" class="col-sm-3 col-form-label">Password</label>
-                <div class="col-sm-9">
-                    <input type="password" class="form-control" id="exampleInputPassword1">
                 </div>
-            </div>
+                                                             
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="ageInput2">Age 2</label>
+                    <input type="text" class="form-control" id="ageInput2" aria-describedby="ageHelp2">
+                    <small id="ageHelp2" class="form-text text-muted">Enter age 2.</small>
+                  </div>
+                </div>
+              </div>
             
-            <div class="mb-3 row">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
                 </div>
-            </div>
-        </form>
+              </div>
+            </form>
+            
+       
         
         </div>
     </div>
