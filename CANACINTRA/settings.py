@@ -44,6 +44,18 @@ DATABASES = {
     }
 }
 """
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'CanacintraDemo',
+        'USER': 'postgres',
+        'PASSWORD': 'oscar1234',
+        'HOST': 'localhost',   # Puedes cambiar esto si tu base de datos está en un servidor diferente
+        'PORT': '5432',        # Puerto por defecto de PostgreSQL
+    }
+}
+"""
 
 # Application definition
 

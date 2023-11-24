@@ -20208,3 +20208,9 @@ ul {
 width: 70%; /* Puedes ajustar este valor según tus necesidades */
 margin: 0 auto; /* Para centrar el contenedor */
 }
+
+.size_label{
+
+    
+    font-size: 18px !important;
+}

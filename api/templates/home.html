@@ -1,18 +1,21 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
   <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-dTUE7rO1e47V45k66vi1zIzRSRhfR2TI+o4NreT3LjkGGpgD6d6goDDv8oclC7rl" crossorigin="anonymous">
+
 
 </head>
 
 <body>
+
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -43,22 +46,45 @@
                 <span class="hide-menu">Dashboard</span>
               </a>
             </li>
-            </ul>
-            <ul>
-              <li class="nav-small-cap">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">Register</span>
-              </li>
-              <li class="sidebar-item">
-                <button class="btn btn-outline-primary" onclick="openModal()">
-                  <span>
-                    <i class="ti ti-layout-dashboard"></i>
-                  </span>
-                  <span class="hide-menu">Registration of Profiles</span>
-                </button>
-              </li>
-            </ul>
+          </ul>
+          <ul>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Register</span>
+            </li>
+            <li class="sidebar-item">
+              <button class="btn btn-outline-primary" onclick="openModal()">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Registration of Profiles</span>
+              </button>
+            </li>
+            
+          </ul>
+          <br>
+          <div style="border: 1px solid rgba(0, 0, 255, 0.288); border-radius: 10px; padding: 10px; box-shadow: 2px 5px 5px 2px gray; height: 250px;">
+          <div class="mb-4" >
+                    
+            <h5 class="card-title fw-semibold">Recent entries</h5>
+          </div>
+          {% for perfil in Perfiles %}
+          <ul class="timeline-widget mb-0 position-relative mb-n5">
+            <li class="timeline-item d-flex position-relative overflow-hidden">
+              <div class="timeline-time text-dark flex-shrink-0 text-end">{{perfil.fecha_realizacion}}</div>
+              <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
+                <span class="timeline-badge-border d-block flex-shrink-0"></span>
+              </div>
+              <div class="timeline-desc fs-3 text-dark mt-n1">{{perfil.user.username}} </div>
+              
+            </li>
+            
+            {% endfor %}
+          </ul>
+        </div>
           
+            
         </nav>
         <!-- End Sidebar navigation -->
       </div>
@@ -84,11 +110,17 @@
             </li>
           </ul>
           <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              {{ username }}
+              
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="{% static 'images/profile/user-1.jpg' %}" alt="" width="35" height="35" class="rounded-circle">
+                  
+                  <img src="{% static 'images/profile/user-1.jpg' %}" alt="" width="35" height="35"
+                    class="rounded-circle">
+                    
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -116,27 +148,6 @@
       <div class="container-fluid">
         <!--  Row 1 -->
         <div class="row">
-          <div class="col-lg-8 d-flex align-items-strech">
-            <div class="card w-100">
-              <div class="card-body">
-                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                  <div class="mb-3 mb-sm-0">
-                    
-                    <h5 class="card-title fw-semibold">Profiles Overview</h5>
-                  </div>
-                  <div>
-                    <select class="form-select">
-                      <option value="1">March 2023</option>
-                      <option value="2">April 2023</option>
-                      <option value="3">May 2023</option>
-                      <option value="4">June 2023</option>
-                    </select>
-                  </div>
-                </div>
-                <div id="chart"></div>
-              </div>
-            </div>
-          </div>
           <div class="col-lg-4">
             <div class="row">
               <div class="col-lg-12">
@@ -208,76 +219,37 @@
                     </div>
                   </div>
                 </div>
+                
+      
               </div>
-              
+
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-strech">
+            <div class="card w-100">
+              <div class="card-body">
+                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                  <div class="mb-3 mb-sm-0">
+
+                    <h5 class="card-title fw-semibold">Profiles Overview</h5>
+                  </div>
+                  <div>
+                    <select class="form-select">
+                      <option value="1">March 2023</option>
+                      <option value="2">April 2023</option>
+                      <option value="3">May 2023</option>
+                      <option value="4">June 2023</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="chart"></div>
+              </div>
             </div>
           </div>
         </div>
+
         <div class="row">
-          <div class="col-lg-4 d-flex align-items-stretch">
-            <div class="card w-100">
-              <div class="card-body p-4">
-                <div class="mb-4">
-                  <h5 class="card-title fw-semibold">Recent entries</h5>
-                </div>
-                <ul class="timeline-widget mb-0 position-relative mb-n5">
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">09:30</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1">Payment received from John Doe of $385.90</div>
-                  </li>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">10:00 am</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                        href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                    </div>
-                  </li>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1">Payment was made of $64.95 to Michael</div>
-                  </li>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New sale recorded <a
-                        href="javascript:void(0)" class="text-primary d-block fw-normal">#ML-3467</a>
-                    </div>
-                  </li>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">09:30 am</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-                      <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1 fw-semibold">New arrival recorded 
-                    </div>
-                  </li>
-                  <li class="timeline-item d-flex position-relative overflow-hidden">
-                    <div class="timeline-time text-dark flex-shrink-0 text-end">12:00 am</div>
-                    <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                      <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                    </div>
-                    <div class="timeline-desc fs-3 text-dark mt-n1">Payment Done</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-8 d-flex align-items-stretch">
+          <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
               <div class="card-body p-4">
                 <h5 class="card-title fw-semibold mb-4">Top 5 Profiles with Highest Experience</h5>
@@ -300,81 +272,59 @@
                         <th class="border-bottom-0">
                           <h6 class="fw-semibold mb-0">Lenguage</h6>
                         </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">CV</h6>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
+                        {% for perfil in Perfiles %}
                         <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Sunil Joshi</h6>
-                            <span class="fw-normal">Web Designer</span>                          
+                          <h6 class="fw-semibold mb-0">{{perfil.idPerfil}}</h6>
                         </td>
                         <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">Elite Admin</p>
+                          <h6 class="fw-semibold mb-1">
+                            {% for area in perfil.areas_especialidad %}
+                                {{ area }}<br>
+                            {% endfor %}
+                        </h6>
                         </td>
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ perfil.user.first_name }} {{ perfil.user.last_name }}</p>
+                        </td> 
                         <td class="border-bottom-0">
                           <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
+                            {% if perfil.años_programacion > 1 and perfil.años_programacion < 3 %}
+                                <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
+                            
+                            {% elif perfil.años_programacion > 2 and perfil.años_programacion < 5 %}
+                            <span class="badge bg-success rounded-3 fw-semibold">Medium</span>
+                            
+                            {% elif perfil.años_programacion > 4 %}
+                            <span class="badge bg-warning rounded-3 fw-semibold">Highest</span>
+                            
+                            
+                            
+                            {% endif %}
+
                           </div>
                         </td>
                         <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
-                        </td>
-                      </tr> 
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">2</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Andrew McDownland</h6>
-                            <span class="fw-normal">Project Manager</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">Real Homes WP Theme</p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0 fs-4">$24.5k</h6>
-                        </td>
-                      </tr> 
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">3</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Christopher Jamil</h6>
-                            <span class="fw-normal">Project Manager</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">MedicalPro WP Theme</p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-danger rounded-3 fw-semibold">High</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0 fs-4">$12.8k</h6>
-                        </td>
-                      </tr>      
-                      <tr>
-                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">4</h6></td>
-                        <td class="border-bottom-0">
-                            <h6 class="fw-semibold mb-1">Nirav Joshi</h6>
-                            <span class="fw-normal">Frontend Engineer</span>                          
-                        </td>
-                        <td class="border-bottom-0">
-                          <p class="mb-0 fw-normal">Hosting Press HTML</p>
-                        </td>
-                        <td class="border-bottom-0">
-                          <div class="d-flex align-items-center gap-2">
-                            <span class="badge bg-success rounded-3 fw-semibold">Critical</span>
-                          </div>
-                        </td>
-                        <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0 fs-4">$2.4k</h6>
-                        </td>
-                      </tr>                       
+                          <h6 class="fw-semibold mb-1">
+                            {% for lenguaje in perfil.tipos_lenguajes %}
+                                {{ lenguaje }}<br>
+                            {% endfor %}
+                        </h6>
+                      </td>
+                      <td class="border-bottom-0">
+                          <h1>Color</h1>
+                          <i class="fas fa-file-pdf" style="color: black;"></i>
+
+                      
+                    </td>
+                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
                 </div>
@@ -382,79 +332,319 @@
             </div>
           </div>
         </div>
-        </div>
-        <div class="py-6 px-6 text-center">
-          <p class="mb-0 fs-4">Design and Developer by : TESCHI-CCAI</a></p>
-        </div>
+      </div>
+      <div class="py-6 px-6 text-center">
+        <p class="mb-0 fs-4">Design and Developer by : TESCHI-CCAI</a></p>
       </div>
     </div>
   </div>
+  </div>
   <div id="myModal" class="modal">
     <div class="modal-content mx-auto my-4">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <div class="small-form-container"> <!-- Nuevo contenedor para el formulario -->
-          <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100 p-4">
-            <img src="{% static 'images/logos/dark-logo.svg' %}" width="300" alt="">
-            <div class="form-text">Please answer the form accurately.</div>
-          </a>
-          
-               
-         
-            <form>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="ageInput1">Age 1</label>
-                    <input type="text" class="form-control" id="ageInput1" aria-describedby="ageHelp1">
-                    <small id="ageHelp1" class="form-text text-muted">Enter age 1.</small>
-                  </div>
-                </div>
-                                                             
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label for="ageInput2">Age 2</label>
-                    <input type="text" class="form-control" id="ageInput2" aria-describedby="ageHelp2">
-                    <small id="ageHelp2" class="form-text text-muted">Enter age 2.</small>
-                  </div>
-                </div>
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="small-form-container"> <!-- Nuevo contenedor para el formulario -->
+        <a class="text-nowrap logo-img text-center d-block py-3 w-100 p-4">
+          <img src="{% static 'images/logos/dark-logo.svg' %}" width="300" alt="">
+          <div class="form-text">Please answer the form accurately.</div>
+        </a>
+
+
+
+        <form class="form-inline "
+          style="padding: 20px; border: 1px solid gray; border-radius: 10px; box-shadow: 5px 3px 5px 5px rgba(128, 128, 128, 0.534);"
+          method="post" action="{% url 'add_profile' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="my-1 mr-6 size_label" for="inlineFormCustomSelectPref"><strong>How old are
+                    you?</strong></label>
+                <input type="number" min="0" max="50" class="form-control mt-2" id="ageInput1" name="age"
+                  aria-describedby="ageHelp1">
               </div>
-            
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="my-1 mr-6 size_label" for="inlineFormCustomSelectPref"><strong>What is your
+                    gender?</strong></label>
+                <br>
+                <select id="opciones" name="gender" class="form-control mt-2" id="ageInput1"
+                  aria-describedby="ageHelp1">
+                  <option value="" disabled hidden selected>Select an opcion </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="I prefer not to say">I prefer not to say</option>
+                </select>
               </div>
-            </form>
-            
-       
-        
-        </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label class="my-1 mr-8 size_label" for="inlineFormCustomSelectPref"><strong>What operating system do
+                    you primarily use for development?</strong></label>
+                <br>
+                <select id="opciones" class="form-control mt-2" id="ageInput1" name="opersys"
+                  aria-describedby="ageHelp1">
+                  <option value="" disabled hidden selected>Select an opcion </option>
+                  <option value="Windows">Windows </option>
+                  <option value="MacOS">macOS</option>
+                  <option value="Linux">Linux</option>
+                </select>
+              </div>
+
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label"><strong>How many years of experience do you have as a
+                    developer? </strong></label>
+                <input type="text" class="form-control mt-3" id="ageInput1" name="experienceage"
+                  aria-describedby="ageHelp1">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label"><strong> What area do you specialize in as a
+                    developer?</strong></label>
+                <br>
+                <label>
+                  <input type="checkbox" name="specialdev" value="Web Development" style="margin-top: 20px;"> Web
+                  Development
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="specialdev" value="Mobile Development" style="margin-top: 10px;"> Mobile
+                  Development
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="specialdev" value="Desktop Application Development"
+                    style="margin-top: 10px;"> Desktop Application Development
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="specialdev" value="Artificial Intelligence/Machine Learning"
+                    style="margin-top: 10px;"> Artificial Intelligence/Machine Learning
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="specialdev" value="DevOps" style="margin-top: 10px;"> DevOps
+                </label>
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput2" class="size_label"> <strong>What is your preferred framework for web
+                    development?</strong></label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="Angular" style="margin-top: 10px;"> Angular
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="React" style="margin-top: 10px;"> React
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="Vue.js" style="margin-top: 10px;"> Vue.js
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="Django" style="margin-top: 10px;"> Django
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="Ruby on Rails" style="margin-top: 10px;"> Ruby on Rails
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="frame_dev" value="None" style="margin-top: 10px;"> None
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label"><strong> Which of the following programming languages do you
+                    use most frequently in your work? </strong></label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="Java" style="margin-top: 10px;"> Java
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="Python" style="margin-top: 10px;"> Python
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="Javascript" style="margin-top: 10px;"> Javascript
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="C#" style="margin-top: 10px;"> C#
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="Ruby" style="margin-top: 10px;"> Ruby
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="program_dev" value="C++" style="margin-top: 10px;"> C++
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput2" class="size_label"><strong> Have you contributed to open-source
+                    projects?</strong></label>
+                <label>
+                  <input type="checkbox" name="open_dev" value="Software development" style="margin-top: 10px;">
+                  Software development
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="open_dev" value="Documentation" style="margin-top: 10px;"> Documentation
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="open_dev" value="Testing/QA" style="margin-top: 10px;"> Testing/QA
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label mb-2"><strong> What are the most common challenges you face as
+                    a developer? </strong></label>
+                <label>
+                  <input type="checkbox" name="challenge_dev" value="Performance issues" style="margin-top: 10px;">
+                  Performance issues
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="challenge_dev" value="Maintenance of legacy code"
+                    style="margin-top: 10px;"> Maintenance of legacy code
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="challenge_dev" value="Dependency management" style="margin-top: 10px;">
+                  Dependency management
+                </label>
+                <label>
+                  <input type="checkbox" name="challenge_dev" value="Lack of documentation" style="margin-top: 10px;">
+                  Lack of documentation
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="challenge_dev" value="Team collaboration" style="margin-top: 10px;"> Team
+                  collaboration
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput2" class="size_label mb-2"><strong> Do you participate in online communities or
+                    developer groups? </strong></label>
+                <br>
+                <select id="opciones" name="community" class="form-control mt-2" id="ageInput1"
+                  aria-describedby="ageHelp1">
+                  <option value="" disabled hidden selected>Select an opcion </option>
+                  <option value="Yes">Yes </option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label"><strong> Which of the following tools do you consider
+                    essential in your daily work as a developer? </strong></label>
+                <label>
+                  <input type="checkbox" name="tools_dev" value="Git/GitHub" style="margin-top: 10px;"> Git/GitHub
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="tools_dev" value="Visual Studio Code" style="margin-top: 10px;"> Visual
+                  Studio Code
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="tools_dev" value="Docker" style="margin-top: 10px;"> Docker
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="tools_dev" value="Jira" style="margin-top: 10px;"> Jira
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="tools_dev" value="Slack" style="margin-top: 10px;"> Slack
+                </label>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group" style="margin-top: 20px;">
+                <label for="ageInput1" class="size_label"><strong> Which of the following tools do you consider
+                    essential in your daily work as a developer?</strong></label>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Zoom" style="margin-top: 10px;"> Zoom
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Trello" style="margin-top: 10px;"> Trello
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Google Meet" style="margin-top: 10px;"> Google Meet
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Microsoft Teams" style="margin-top: 10px;"> Microsoft
+                  Teams
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Slack" style="margin-top: 10px;"> Slack
+                </label>
+                <br>
+                <label>
+                  <input type="checkbox" name="com_dev" value="Monday.com" style="margin-top: 10px;"> Monday.com
+                </label>
+              </div>
+            </div>
+            <br>
+            <input type="hidden" name="id_user" value="{{id_user}}">
+            <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 20px;"> Submit </button>
+
+
+        </form>
+      </div>
     </div>
-</div>
-
-
-
+  </div>
 
   <script>
     function openModal() {
       document.getElementById('myModal').style.display = 'block';
     }
-  
+
     function closeModal() {
       document.getElementById('myModal').style.display = 'none';
     }
-  
+
     // Close modal if the user clicks outside of it
-    window.onclick = function(event) {
+    window.onclick = function (event) {
       var modal = document.getElementById('myModal');
       if (event.target === modal) {
         modal.style.display = 'none';
       }
     };
   </script>
-  
+
   <script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/sidebarmenu.js' %}"></script>

@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+
 # Create your views here.
 
 class Login(APIView):
@@ -19,7 +20,8 @@ class Login(APIView):
 
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Cambia 'dashboard' por la URL a la que quieres redirigir después del inicio de sesión
+                
+                return redirect('home') # Cambia 'dashboard' por la URL a la que quieres redirigir después del inicio de sesión
             else:
                 # El usuario no fue autenticado correctamente
                 error_message = 'Invalid credentials'
@@ -48,13 +50,15 @@ class Register(APIView):
 
     def post(self, request):
         username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username, email=email, password=password1)
+                user = User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email, password=password1)
 
                 # Leer el contenido del archivo HTML
                 with open('api/templates/send_mail.html', 'r') as file:
