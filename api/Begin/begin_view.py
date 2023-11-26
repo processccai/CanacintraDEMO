@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from api.models import Validar
 
 # Create your views here.
 
@@ -58,27 +59,42 @@ class Register(APIView):
 
         if password1 == password2:
             if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username,first_name=first_name,last_name=last_name,email=email, password=password1)
+                # Create a new user
+                user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password1)
 
-                # Leer el contenido del archivo HTML
+                # Read the content of the HTML file
                 with open('api/templates/send_mail.html', 'r') as file:
                     html_content = file.read()
 
-                # Reemplazar las variables en el archivo HTML con datos del usuario
+                # Replace variables in the HTML file with user data
                 html_content = html_content.format(username=username, password=password1)
 
-                # Envío de correo electrónico al usuario registrado con formato HTML
+                # Send an email to the registered user with HTML format
                 send_mail(
-                    'Not reply, successfuly register',
-                    '',  # Deja el cuerpo del mensaje en blanco, ya que lo proporcionamos en HTML
+                    'Not reply, successfully registered',
+                    '',  # Leave the message body blank since we provide it in HTML
                     'processautomedccai@gmail.com',
                     [email],
-                    html_message=html_content,  # Especifica el mensaje HTML
+                    html_message=html_content,  # Specify the HTML message
                     fail_silently=False,
                 )
 
+                # Authenticate and log in the user
                 user = authenticate(request, username=username, password=password1)
                 login(request, user)
+
+                # Get the ID of the newly created user
+                id_user = user.id
+
+                # Fetch the user object from the database
+                usuario = User.objects.get(id=id_user)
+
+                # Create a Validar instance for the user
+                validacion_instance = Validar(
+                    usuario=usuario,
+                    validacion=True
+                )
+                validacion_instance.save()
 
                 return redirect('success_register')
             else:

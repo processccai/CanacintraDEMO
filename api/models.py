@@ -19,8 +19,14 @@ class Perfil(models.Model):
     challenge_devs = models.TextField(null=True, blank=True)
     herramientas_comunicacion = models.TextField(null=True, blank=True)
     herramientas_desarrollo = models.TextField(null=True, blank=True)
-    validacion = models.BooleanField(default=True)
+    curriculum_link = models.TextField(null=True, blank=True)
 
     class Meta:
         # Comenta la línea db_table si quieres seguir la convención de nombres predeterminada
         db_table = "perfil"
+class Validar(models.Model):
+    id = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    validacion = models.BooleanField(default=True)
+    class Meta:
+        db_table='validar'

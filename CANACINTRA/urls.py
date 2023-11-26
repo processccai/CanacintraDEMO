@@ -23,6 +23,7 @@ from api.Profiles.profile_view import AddProfiel
 urlpatterns = [
     #path('admin/', admin.site.urls),
     path('',Home.as_view(),name='home'),
+    path('home/',Home.as_view(),name='home'),
     path('login/',Login.as_view(),name='login'),
     path('logout/',Logout.as_view(),name='logout'),
     path('register/',Register.as_view(),name='register'),

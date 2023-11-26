@@ -9,8 +9,7 @@
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
   <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-dTUE7rO1e47V45k66vi1zIzRSRhfR2TI+o4NreT3LjkGGpgD6d6goDDv8oclC7rl" crossorigin="anonymous">
-
+  
 
 </head>
 
@@ -52,6 +51,16 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Register</span>
             </li>
+            {% if valor_validacion %}
+            <li class="sidebar-item">
+              <button class="btn btn-outline-danger" onclick="openModal()" disabled>
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Registration of Profiles</span>
+              </button>
+            </li>
+            {% else %}
             <li class="sidebar-item">
               <button class="btn btn-outline-primary" onclick="openModal()">
                 <span>
@@ -60,10 +69,10 @@
                 <span class="hide-menu">Registration of Profiles</span>
               </button>
             </li>
-            
+            {% endif %}
           </ul>
           <br>
-          <div style="border: 1px solid rgba(0, 0, 255, 0.288); border-radius: 10px; padding: 10px; box-shadow: 2px 5px 5px 2px gray; height: 250px;">
+          <div style="border: 1px solid rgba(0, 0, 255, 0.288); border-radius: 10px; padding: 10px; box-shadow: 2px 5px 5px 2px gray; height: 430px;">
           <div class="mb-4" >
                     
             <h5 class="card-title fw-semibold">Recent entries</h5>
@@ -157,24 +166,16 @@
                     <h5 class="card-title mb-9 fw-semibold">Quantity of profiles</h5>
                     <div class="row align-items-center">
                       <div class="col-8">
-                        <h4 class="fw-semibold mb-3">36,358</h4>
+                        <h4 class="fw-semibold mb-3">[[cantidad__Registros]] </h4>
                         <div class="d-flex align-items-center mb-3">
-                          <span
-                            class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
-                            <i class="ti ti-arrow-up-left text-success"></i>
-                          </span>
-                          <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                          <p class="fs-3 mb-0">last year</p>
+                          
                         </div>
                         <div class="d-flex align-items-center">
                           <div class="me-4">
                             <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-                            <span class="fs-2">2023</span>
-                          </div>
-                          <div>
-                            <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
                             <span class="fs-2">2024</span>
                           </div>
+                          
                         </div>
                       </div>
                       <div class="col-4">
@@ -286,7 +287,7 @@
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-1">
                             {% for area in perfil.areas_especialidad %}
-                                {{ area }}<br>
+                                <li>{{ area }}</li><br>
                             {% endfor %}
                         </h6>
                         </td>
@@ -312,15 +313,16 @@
                         </td>
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-1">
+                            
                             {% for lenguaje in perfil.tipos_lenguajes %}
-                                {{ lenguaje }}<br>
+                                - {{ lenguaje }}<br>
                             {% endfor %}
                         </h6>
                       </td>
                       <td class="border-bottom-0">
-                          <h1>Color</h1>
-                          <i class="fas fa-file-pdf" style="color: black;"></i>
-
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-address-book" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
+                        <a href="{{perfil.url}}" target="_blank">Download CV </a>
+                        
                       
                     </td>
                       </tr>
@@ -618,6 +620,12 @@
               </div>
             </div>
             <br>
+            
+              <div class="form-group" style="margin-top: 20px; text-align: center;">
+                <label for="URL" class="size_label" style="padding-bottom: 20px;"><strong>Share the link to your CV on Google Drive.</strong></label>
+                <input type="url" name="url" id="url" class="form-control" required>
+              </div>
+            
             <input type="hidden" name="id_user" value="{{id_user}}">
             <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 20px;"> Submit </button>
 

@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework.views import APIView
-from api.models import Perfil
+from api.models import Perfil,Validar
 import json
 
 class AddProfiel(APIView):
-    template_name="success_register.html"
+    template_name="success_form.html"
     def post(self, request):
         # Recopila los datos del formulario
         age = request.POST['age']
@@ -21,7 +21,7 @@ class AddProfiel(APIView):
         tools_dev = json.dumps(request.POST.getlist('tools_dev'))
         com_dev = json.dumps(request.POST.getlist('com_dev'))
         id_user = int(request.POST['id_user'])
-
+        url = request.POST['url']
         # Obtener la instancia del usuario a partir del ID
         usuario = User.objects.get(id=id_user)
 
@@ -40,10 +40,19 @@ class AddProfiel(APIView):
             herramientas_comunicacion=com_dev,
             herramientas_desarrollo=tools_dev,
             usuario=usuario,  # Asignar la instancia del usuario, no el ID
+            curriculum_link=url,
         )
 
         # Guardar la instancia en la base de datos
         perfil_instance.save()
+        
+        # Obtener o crear la instancia de Validar asociada al usuario
+        validar_instance, created = Validar.objects.get_or_create(usuario=usuario)
 
+        # Establecer validacion en True y guardar la instancia de Validar
+        validar_instance.validacion = True
+        validar_instance.save()
+        
+        
         # Puedes redirigir a otra vista o renderizar una plantilla de éxito
         return render(request, self.template_name)

@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from api.models import Perfil
+from api.models import Perfil,Validar
 import json
 # Create your views here.
 @method_decorator(login_required(login_url='login'), name='dispatch')  
@@ -45,13 +45,22 @@ class Home(APIView):
                 'challenge_devs': perfil.challenge_devs,
                 'herramientas_comunicacion': perfil.herramientas_comunicacion,
                 'herramientas_desarrollo': perfil.herramientas_desarrollo,
-                'user': perfil.usuario
+                'user': perfil.usuario,
+                'url' : perfil.curriculum_link,
             })
+
+        # Obtener la instancia de Validar para el usuario actual
+        validar_instancia = get_object_or_404(Validar, usuario=usuario_actual)
+
+        # Obtener el valor de validacion
+        valor_validacion = validar_instancia.validacion
 
         # Pasar los datos procesados al contexto
         context = {
             'Perfiles': perfiles_converted,
             'username': usuario_actual.username if usuario_actual else None,
             'id_user': usuario_actual.id if usuario_actual else None,
+            'valor_validacion': valor_validacion,
         }
+
         return render(request, self.template_name, context)
