@@ -92,6 +92,7 @@ class Home(APIView):
 class ProfileTable(APIView):
     template_name="Profile_Table.html"
     def get(self,request):
+        usuario_actual = request.user
         perfiles = Perfil.objects.all().order_by('-idPerfil')
 
         # Contador para almacenar la frecuencia de cada lenguaje
@@ -138,6 +139,7 @@ class ProfileTable(APIView):
         # Pasar los datos procesados al contexto
         context = {
             'Perfiles': perfiles_converted,
+            'username': usuario_actual.username if usuario_actual else None,
             
         }
         return render(request,self.template_name,context)
