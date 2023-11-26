@@ -20,7 +20,6 @@ DATABASES = {
     'default': dj_database_url.parse(os.environ['DATABASE_URL'])
     }
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -80,6 +79,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'api.middleware.SessionRenewalMiddleware',
 
     
 
@@ -168,7 +168,7 @@ EMAIL_HOST_USER = 'processautomedccai@gmail.com'  # Cambia esto al correo de Gma
 EMAIL_HOST_PASSWORD = 'uvgk egpg gcyl kafi '  
 
 # Duración de la sesión en segundos (en este caso, 1 hora)
-SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 1800
 
 # Actualiza la cookie de sesión cada vez que la sesión se accede
 SESSION_SAVE_EVERY_REQUEST = True
