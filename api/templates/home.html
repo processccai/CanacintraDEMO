@@ -9,6 +9,7 @@
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="{% static 'images/logos/favicon.png' %}" />
   <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
 
 </head>
@@ -163,58 +164,35 @@
                 <!-- Yearly Breakup -->
                 <div class="card overflow-hidden">
                   <div class="card-body p-4">
-                    <h5 class="card-title mb-9 fw-semibold">Quantity of profiles</h5>
+                    <h1 class="card-title mb-9 fw-semibold">Quantity of profiles</h1>
                     <div class="row align-items-center">
                       <div class="col-8">
-                        <h4 class="fw-semibold mb-3">[[cantidad__Registros]] </h4>
-                        <div class="d-flex align-items-center mb-3">
-                          
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="me-4">
-                            <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-                            <span class="fs-2">2024</span>
-                          </div>
-                          
-                        </div>
+                        <h2 class="fw-semibold mb-3">{{total_perfiles}} Profiles <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-accessible " style="color: rgba(0, 0, 255, 0.575);" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1" /><circle cx="12" cy="7.5" r=".5" fill="currentColor" /></svg></h2>
+                        
+                        
                       </div>
-                      <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                          <div id="breakup"></div>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>
                 <!-- Yearly Breakup -->
                 <div class="card overflow-hidden">
                   <div class="card-body p-4">
-                    <h5 class="card-title mb-9 fw-semibold">Preferred Language</h5>
+                    <h4 class="card-title mb-9 fw-semibold">Preferred Language (Top 3)</h4>
                     <div class="row align-items-center">
                       <div class="col-8">
-                        <h4 class="fw-semibold mb-3">$36,358</h4>
+                        {% for language in top_languages %}
+                            <li><h6 class="fw-semibold mb-3">{{ language.0 }}: {{ language.1 }}</h6></li>
+                        {% endfor %}
                         <div class="d-flex align-items-center mb-3">
-                          <span
-                            class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
-                            <i class="ti ti-arrow-up-left text-success"></i>
-                          </span>
-                          <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                          <p class="fs-3 mb-0">last year</p>
+                          
+                          
                         </div>
-                        <div class="d-flex align-items-center">
-                          <div class="me-4">
-                            <span class="round-8 bg-primary rounded-circle me-2 d-inline-block"></span>
-                            <span class="fs-2">2023</span>
-                          </div>
-                          <div>
-                            <span class="round-8 bg-light-primary rounded-circle me-2 d-inline-block"></span>
-                            <span class="fs-2">2023</span>
-                          </div>
-                        </div>
+                        
                       </div>
                       <div class="col-4">
                         <div class="d-flex justify-content-center">
-                          <div id="breakup"></div>
+                          <div id="breakup" style="margin-right: 100px;"></div>
                         </div>
                       </div>
                     </div>
@@ -253,7 +231,7 @@
           <div class="col-lg-12 d-flex align-items-stretch">
             <div class="card w-100">
               <div class="card-body p-4">
-                <h5 class="card-title fw-semibold mb-4">Top 5 Profiles with Highest Experience</h5>
+                <h5 class="card-title fw-semibold mb-4">Top 5 Developers Profiles</h5>
                 <div class="table-responsive">
                   <table class="table text-nowrap mb-0 align-middle">
                     <thead class="text-dark fs-4">
@@ -281,8 +259,8 @@
                     <tbody>
                       <tr>
                         {% for perfil in Perfiles %}
-                        <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-0">{{perfil.idPerfil}}</h6>
+                        <td class="border-bottom-0" style="justify-content: center;">
+                          <h6 class="fw-semibold mb-0"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-code" width="40" height="40" style="color: rgb(4, 111, 143); margin-left: -20px;" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" /><path d="M20 21l2 -2l-2 -2" /><path d="M17 17l-2 2l2 2" /></svg></h6>
                         </td>
                         <td class="border-bottom-0">
                           <h6 class="fw-semibold mb-1">
@@ -321,7 +299,7 @@
                       </td>
                       <td class="border-bottom-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-address-book" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" /><path d="M10 16h6" /><path d="M13 11m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 8h3" /><path d="M4 12h3" /><path d="M4 16h3" /></svg>
-                        <a href="{{perfil.url}}" target="_blank">Download CV </a>
+                        <a href="{{perfil.url}}" target="_blank" style="font-weight: bold;">Download CV </a>
                         
                       
                     </td>
@@ -660,6 +638,72 @@
   <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
   <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
   <script src="{% static 'js/dashboard.js' %}"></script>
+  <script>
+    // =====================================
+    // Breakup
+    // =====================================
+    var top_languages = {{ top_languages|safe }};
+
+    var seriesData = [];
+    var labelsData = [];
+
+    {% for language in top_languages %}
+        seriesData.push({{ language.1 }});
+        labelsData.push("{{ language.0 }}");
+    {% endfor %}
+
+    var breakup = {
+        color: "#adb5bd",
+        series: seriesData,
+        labels: labelsData,
+        chart: {
+            width: 200,
+            type: "donut",
+            fontFamily: "Plus Jakarta Sans', sans-serif",
+            foreColor: "#adb0bb",
+        },
+        plotOptions: {
+            pie: {
+                startAngle: 0,
+                endAngle: 360,
+                donut: {
+                    size: '70%',
+                },
+            },
+        },
+        stroke: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            show: false,
+        },
+        colors: ["#3498db", "#5dade2", "#85c1e9"],
+        responsive: [
+            {
+                breakpoint: 991,
+                options: {
+                    chart: {
+                        width: 150,
+                    },
+                },
+            },
+        ],
+        tooltip: {
+            theme: "dark",
+            fillSeriesColor: false,
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#breakup"), breakup);
+    chart.render();
+</script>
+
+
+
+  
 </body>
 
 </html>

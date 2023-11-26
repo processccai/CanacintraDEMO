@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from api.models import Perfil,Validar
+from collections import Counter
 import json
 # Create your views here.
 @method_decorator(login_required(login_url='login'), name='dispatch')  
@@ -15,6 +16,9 @@ class Home(APIView):
         # Obtener los últimos 5 perfiles ordenados por ID
         perfiles = Perfil.objects.all().order_by('-idPerfil')[:5]
 
+        # Contador para almacenar la frecuencia de cada lenguaje
+        language_counter = Counter()
+
         # Procesar los datos antes de pasarlos a la plantilla
         perfiles_converted = []
         for perfil in perfiles:
@@ -23,6 +27,9 @@ class Home(APIView):
             except json.JSONDecodeError as e:
                 print(f"Error decoding JSON for perfil {perfil.idPerfil}: {e}")
                 tipos_lenguajes = []
+
+            # Incrementar la frecuencia de cada lenguaje
+            language_counter.update(tipos_lenguajes)
 
             try:
                 areas_especialidad = json.loads(perfil.areas_especialidad) if perfil.areas_especialidad else []
@@ -48,12 +55,15 @@ class Home(APIView):
                 'user': perfil.usuario,
                 'url' : perfil.curriculum_link,
             })
-
+        total_perfiles = Perfil.objects.count()
         # Obtener la instancia de Validar para el usuario actual
         validar_instancia = get_object_or_404(Validar, usuario=usuario_actual)
 
         # Obtener el valor de validacion
         valor_validacion = validar_instancia.validacion
+
+        # Obtener los 3 lenguajes más seleccionados
+        top_languages = language_counter.most_common(3)
 
         # Pasar los datos procesados al contexto
         context = {
@@ -61,6 +71,8 @@ class Home(APIView):
             'username': usuario_actual.username if usuario_actual else None,
             'id_user': usuario_actual.id if usuario_actual else None,
             'valor_validacion': valor_validacion,
+            'top_languages': top_languages,
+            'total_perfiles': total_perfiles,
         }
 
         return render(request, self.template_name, context)

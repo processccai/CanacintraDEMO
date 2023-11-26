@@ -92,7 +92,7 @@ class Register(APIView):
                 # Create a Validar instance for the user
                 validacion_instance = Validar(
                     usuario=usuario,
-                    validacion=True
+                    validacion=False
                 )
                 validacion_instance.save()
 
