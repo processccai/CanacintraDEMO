@@ -5,6 +5,8 @@ from django.utils.decorators import method_decorator
 from api.models import Perfil,Validar
 from collections import Counter
 import json
+from django.db.models import Count
+from django.db.models.functions import TruncDate
 # Create your views here.
 @method_decorator(login_required(login_url='login'), name='dispatch')  
 class Home(APIView):
@@ -12,6 +14,13 @@ class Home(APIView):
     def get(self, request):
         # Obtener el usuario actualmente autenticado
         usuario_actual = request.user
+        
+        perfiles_agrupados = (
+            Perfil.objects.annotate(fecha_registro_trunc=TruncDate('fecha_realizacion'))
+            .values('fecha_registro_trunc')
+            .annotate(total_perfiles=Count('idPerfil'))
+            .order_by('-fecha_registro_trunc')
+        )
 
         # Obtener los últimos 5 perfiles ordenados por ID
         perfiles = Perfil.objects.all().order_by('-idPerfil')[:5]
@@ -54,6 +63,7 @@ class Home(APIView):
                 'herramientas_desarrollo': perfil.herramientas_desarrollo,
                 'user': perfil.usuario,
                 'url' : perfil.curriculum_link,
+                'perfiles_agrupados': perfiles_agrupados,
             })
         total_perfiles = Perfil.objects.count()
         # Obtener la instancia de Validar para el usuario actual
@@ -73,6 +83,61 @@ class Home(APIView):
             'valor_validacion': valor_validacion,
             'top_languages': top_languages,
             'total_perfiles': total_perfiles,
+            'perfiles_agrupados': perfiles_agrupados,
         }
+        #print("Perfiles Agrupados:", perfiles_agrupados)
 
         return render(request, self.template_name, context)
+    
+class ProfileTable(APIView):
+    template_name="Profile_Table.html"
+    def get(self,request):
+        perfiles = Perfil.objects.all().order_by('-idPerfil')
+
+        # Contador para almacenar la frecuencia de cada lenguaje
+        language_counter = Counter()
+
+        perfiles_converted = []
+        for perfil in perfiles:
+            try:
+                tipos_lenguajes = json.loads(perfil.tipos_lenguajes) if perfil.tipos_lenguajes else []
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON for perfil {perfil.idPerfil}: {e}")
+                tipos_lenguajes = []
+
+            # Incrementar la frecuencia de cada lenguaje
+            language_counter.update(tipos_lenguajes)
+
+            try:
+                areas_especialidad = json.loads(perfil.areas_especialidad) if perfil.areas_especialidad else []
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON for perfil {perfil.idPerfil}: {e}")
+                areas_especialidad = []
+
+            perfiles_converted.append({
+                'idPerfil': perfil.idPerfil,
+                'edad': perfil.edad,
+                'genero': perfil.genero,
+                'fecha_realizacion': perfil.fecha_realizacion,
+                'tipos_lenguajes': tipos_lenguajes,
+                'años_programacion': perfil.años_programacion,
+                'areas_especialidad': areas_especialidad,
+                'marco_trabajo': perfil.marco_trabajo,
+                'frame_works': perfil.frame_works,
+                'sistemas_operativos': perfil.sistemas_operativos,
+                'online_community': perfil.online_community,
+                'challenge_devs': perfil.challenge_devs,
+                'herramientas_comunicacion': perfil.herramientas_comunicacion,
+                'herramientas_desarrollo': perfil.herramientas_desarrollo,
+                'user': perfil.usuario,
+                'url' : perfil.curriculum_link,
+                
+            })
+      
+
+        # Pasar los datos procesados al contexto
+        context = {
+            'Perfiles': perfiles_converted,
+            
+        }
+        return render(request,self.template_name,context)

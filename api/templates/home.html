@@ -71,6 +71,20 @@
               </button>
             </li>
             {% endif %}
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Profiles</span>
+            </li>
+            <li class="sidebar-item">
+              <a href="{% url 'profile_table'%}">
+              <button class="btn btn-outline-primary">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Profiles Table</span>
+              </button>
+              </a>
+            </li>
           </ul>
           <br>
           <div style="border: 1px solid rgba(0, 0, 255, 0.288); border-radius: 10px; padding: 10px; box-shadow: 2px 5px 5px 2px gray; height: 430px;">
@@ -204,6 +218,8 @@
 
             </div>
           </div>
+         
+      
           <div class="col-lg-8 d-flex align-items-strech">
             <div class="card w-100">
               <div class="card-body">
@@ -213,11 +229,10 @@
                     <h5 class="card-title fw-semibold">Profiles Overview</h5>
                   </div>
                   <div>
+                    
                     <select class="form-select">
-                      <option value="1">March 2023</option>
-                      <option value="2">April 2023</option>
-                      <option value="3">May 2023</option>
-                      <option value="4">June 2023</option>
+                      <option value="1">Noviembre 2023</option>
+                      
                     </select>
                   </div>
                 </div>
@@ -637,7 +652,7 @@
   <script src="{% static 'js/app.min.js' %}"></script>
   <script src="{% static 'libs/apexcharts/dist/apexcharts.min.js' %}"></script>
   <script src="{% static 'libs/simplebar/dist/simplebar.js' %}"></script>
-  <script src="{% static 'js/dashboard.js' %}"></script>
+
   <script>
     // =====================================
     // Breakup
@@ -699,6 +714,103 @@
 
     var chart = new ApexCharts(document.querySelector("#breakup"), breakup);
     chart.render();
+</script>
+<script>
+  // Datos de Django
+  var perfilesAgrupados = [
+      {% for perfil_agrupado in perfiles_agrupados %}
+          {
+              total_perfiles: {{ perfil_agrupado.total_perfiles }},
+              fecha_registro: "{{ perfil_agrupado.fecha_registro_trunc|date:"d/m" }}"
+          }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+  ];
+
+  // Extraer datos para la gráfica
+  var categorias = perfilesAgrupados.map(item => item.fecha_registro);
+  var series = perfilesAgrupados.map(item => item.total_perfiles);
+
+  // Configuración de la gráfica
+  var options = {
+      series: [
+          { name: "Total Perfiles", data: series },
+      ],
+      chart: {
+          type: 'bar',
+          height: 345,
+          foreColor: "#adb0bb",
+          fontFamily: 'inherit',
+      },
+      colors: ["#5D87FF"],
+      plotOptions: {
+          bar: {
+              horizontal: false,
+              columnWidth: '35%',
+              borderRadius: 6,
+              borderRadiusApplication: 'end',
+              borderRadiusWhenStacked: 'all'
+          }
+      },
+      dataLabels: {
+          enabled: false
+      },
+      xaxis: {
+          type: 'category',
+          categories: categorias,
+          labels: {
+              style: {
+                  cssClass: 'grey--text lighten-2--text fill-color'
+              }
+          }
+      },
+      yaxis: {
+          show: true,
+          min: 0,
+          max: 70,
+          tickAmount: 4,
+          labels: {
+              style: {
+                  cssClass: 'grey--text lighten-2--text fill-color'
+              }
+          }
+      },
+      grid: {
+          borderColor: 'rgba(0,0,0,0.1)',
+          strokeDashArray: 3,
+          xaxis: {
+              lines: {
+                  show: false
+              }
+          }
+      },
+      stroke: {
+          show: true,
+          width: 3,
+          lineCap: 'butt',
+          colors: ['transparent']
+      },
+      tooltip: {
+          theme: 'light'
+      },
+      responsive: [
+          {
+              breakpoint: 400,
+              options: {
+                  plotOptions: {
+                      bar: {
+                          borderRadius: 3
+                      }
+                  }
+              }
+          }
+      ]
+  };
+
+  // Crear la instancia de ApexCharts
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+  // Renderizar la gráfica
+  chart.render();
 </script>
 
 

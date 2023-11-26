@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.home.home_view import Home
+from api.home.home_view import Home,ProfileTable
 from api.Begin.begin_view import Login,Register,Logout,Success_register
 from api.Profiles.profile_view import AddProfiel
 
@@ -29,6 +29,7 @@ urlpatterns = [
     path('register/',Register.as_view(),name='register'),
     path('success_register/',Success_register.as_view(),name='success_register'),
     path('add_profile/',AddProfiel.as_view(),name='add_profile'),
+    path('profile_table/',ProfileTable.as_view(),name='profile_table'),
 
 
 ]
